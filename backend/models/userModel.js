@@ -21,7 +21,7 @@ userSchema.statics.signup = async function (email, password) {
     if (!email || !password) {
         throw Error('All fields must be filled');
     }
-    if (!validator.isEmpty(email)) {
+    if (!validator.isEmail(email)) {
         throw Error('Invalid email');
     }
     if (!validator.isAlphanumeric(password)) {
