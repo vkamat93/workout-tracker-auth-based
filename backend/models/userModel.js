@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const validator = require('validator')
 
 const userSchema = new mongoose.Schema({
     email: {
@@ -15,6 +16,20 @@ const userSchema = new mongoose.Schema({
 
 // creating static method to be called in controller
 userSchema.statics.signup = async function (email, password) {
+
+    // validation logic
+    if (!email || !password) {
+        throw Error('All fields must be filled');
+    }
+    if (!validator.isEmpty(email)) {
+        throw Error('Invalid email');
+    }
+    if (!validator.isAlphanumeric(password)) {
+        throw Error('Password should be alphanumeric');
+    }
+
+
+
     // cannot user User.findOne since we are exporting it after this LOC and exporting it elsewhere, so this is used
     const userExists = await this.findOne({ email }) 
     if (userExists) {
