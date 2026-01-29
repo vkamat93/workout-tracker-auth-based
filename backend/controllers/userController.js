@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 // mongo db uses _id, so we use that as jwt payload
 const createToken = (_id) => {
-    return jwt.sign({_id}, process.env.SECRET_TOKEN, { expiresIn: '3d' });
+    return jwt.sign({_id}, process.env.SECRET_KEY, { expiresIn: '3d' });
 }
 
 // login user
