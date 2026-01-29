@@ -19,13 +19,13 @@ export const useSignup = () => {
 
         if (!response.ok) {
             setIsLoading(false)
-            setError(data.error)
+            setError(userData.error)
         }
         if (response.ok) {
             // save user to local storage
             localStorage.setItem('userData', JSON.stringify(userData))
 
-            // update auth context
+            // update auth context with dispatch action LOGIN
             dispatch({type: 'LOGIN', payload: userData})
             setIsLoading(false)
         }
