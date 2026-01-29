@@ -8,7 +8,17 @@ const createToken = (_id) => {
 
 // login user
 const loginUser = async (req, res) => {
-    res.json({ message: 'login user' });
+    const { email, password } = req.body;
+    
+    try {
+        const existingUser = await User.login(email, password); // creates a Mongo DB document
+        // create a token
+        const token = createToken(existingUser._id);
+
+        res.status(200).json({email, token})
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 }
 
 
@@ -17,7 +27,6 @@ const signupUser = async (req, res) => {
     const { email, password } = req.body;
     try {
         const newUser = await User.signup(email, password); // creates a Mongo DB document
-
         // create a token
         const token = createToken(newUser._id);
 
